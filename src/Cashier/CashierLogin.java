@@ -25,7 +25,7 @@ public class CashierLogin extends javax.swing.JDialog implements ActionListener 
      * Creates new form CashierLogin
      */
     public CashierLogin(JFrame frame) {
-        super(frame);
+        super(frame,true);
         initComponents();
         setLocationRelativeTo(null);
         initializeData();

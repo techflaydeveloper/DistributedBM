@@ -57,7 +57,6 @@ setExtendedState(MAXIMIZED_BOTH);
         jPanel4 = new javax.swing.JPanel();
         jToggleButton1 = new javax.swing.JToggleButton();
         jToggleButton4 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
         jToggleButton3 = new javax.swing.JToggleButton();
         ordersPanel = new javax.swing.JPanel();
         jToggleButton9 = new javax.swing.JToggleButton();
@@ -100,6 +99,13 @@ setExtendedState(MAXIMIZED_BOTH);
         jScrollPane2 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         masterCardPanel = new javax.swing.JPanel();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu2 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenuItem4 = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,7 +118,7 @@ setExtendedState(MAXIMIZED_BOTH);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 827, Short.MAX_VALUE)
+                .addGap(0, 839, Short.MAX_VALUE)
                 .addComponent(jToggleButton7, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -169,9 +175,12 @@ setExtendedState(MAXIMIZED_BOTH);
             }
         });
 
-        jToggleButton2.setText("Daily Sales");
-
-        jToggleButton3.setText("Waiter Sales");
+        jToggleButton3.setText("Waiter Today Sales");
+        jToggleButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton3ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -181,10 +190,9 @@ setExtendedState(MAXIMIZED_BOTH);
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jToggleButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 152, Short.MAX_VALUE)
-                    .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jToggleButton4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jToggleButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(jToggleButton4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,12 +200,10 @@ setExtendedState(MAXIMIZED_BOTH);
                 .addContainerGap()
                 .addComponent(jToggleButton1)
                 .addGap(18, 18, 18)
-                .addComponent(jToggleButton2)
-                .addGap(18, 18, 18)
                 .addComponent(jToggleButton3)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(jToggleButton4)
-                .addContainerGap())
+                .addContainerGap(61, Short.MAX_VALUE))
         );
 
         ordersPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "TICKET", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP));
@@ -217,6 +223,11 @@ setExtendedState(MAXIMIZED_BOTH);
         });
 
         jToggleButton10.setText("Update Order");
+        jToggleButton10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton10ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout ordersPanelLayout = new javax.swing.GroupLayout(ordersPanel);
         ordersPanel.setLayout(ordersPanelLayout);
@@ -234,7 +245,7 @@ setExtendedState(MAXIMIZED_BOTH);
                 .addComponent(jButton5)
                 .addGap(18, 18, 18)
                 .addComponent(jToggleButton10)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jToggleButton9))
@@ -306,7 +317,7 @@ setExtendedState(MAXIMIZED_BOTH);
             .addGroup(jPanel5Layout.createSequentialGroup()
                 .addGap(27, 27, 27)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(285, Short.MAX_VALUE))
+                .addContainerGap(297, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -363,11 +374,11 @@ setExtendedState(MAXIMIZED_BOTH);
         jPanel8.setLayout(jPanel8Layout);
         jPanel8Layout.setHorizontalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 772, Short.MAX_VALUE)
         );
         jPanel8Layout.setVerticalGroup(
             jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 434, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 411, Short.MAX_VALUE)
         );
 
         unsettledSales.add(jPanel8, java.awt.BorderLayout.CENTER);
@@ -408,7 +419,7 @@ setExtendedState(MAXIMIZED_BOTH);
                     .addGroup(jPanel9Layout.createSequentialGroup()
                         .addGap(205, 205, 205)
                         .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(213, Short.MAX_VALUE))
+                .addContainerGap(225, Short.MAX_VALUE))
         );
         jPanel9Layout.setVerticalGroup(
             jPanel9Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -450,7 +461,7 @@ setExtendedState(MAXIMIZED_BOTH);
                 .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(45, 45, 45)
                 .addComponent(jButton4)
-                .addContainerGap(378, Short.MAX_VALUE))
+                .addContainerGap(355, Short.MAX_VALUE))
         );
 
         dailyRevenue.add(jPanel10, java.awt.BorderLayout.LINE_END);
@@ -532,7 +543,7 @@ setExtendedState(MAXIMIZED_BOTH);
                 .addGroup(summaryReportLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(120, Short.MAX_VALUE))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         dailySummary.add(summaryReport, "summary");
@@ -543,11 +554,11 @@ setExtendedState(MAXIMIZED_BOTH);
         cashPanel.setLayout(cashPanelLayout);
         cashPanelLayout.setHorizontalGroup(
             cashPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 573, Short.MAX_VALUE)
+            .addGap(0, 585, Short.MAX_VALUE)
         );
         cashPanelLayout.setVerticalGroup(
             cashPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 486, Short.MAX_VALUE)
+            .addGap(0, 463, Short.MAX_VALUE)
         );
 
         dailySummary.add(cashPanel, "cash");
@@ -576,13 +587,13 @@ setExtendedState(MAXIMIZED_BOTH);
             mpesaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mpesaPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 567, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 579, Short.MAX_VALUE))
         );
         mpesaPanelLayout.setVerticalGroup(
             mpesaPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(mpesaPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 474, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -594,11 +605,11 @@ setExtendedState(MAXIMIZED_BOTH);
         masterCardPanel.setLayout(masterCardPanelLayout);
         masterCardPanelLayout.setHorizontalGroup(
             masterCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 573, Short.MAX_VALUE)
+            .addGap(0, 585, Short.MAX_VALUE)
         );
         masterCardPanelLayout.setVerticalGroup(
             masterCardPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 486, Short.MAX_VALUE)
+            .addGap(0, 463, Short.MAX_VALUE)
         );
 
         dailySummary.add(masterCardPanel, "mastercard");
@@ -608,6 +619,33 @@ setExtendedState(MAXIMIZED_BOTH);
         cashierMainPanel.add(dailyRevenue, "dailyRevenue");
 
         getContentPane().add(cashierMainPanel, java.awt.BorderLayout.CENTER);
+
+        jMenu1.setText("Stock");
+
+        jMenuItem1.setText("Opening Stock");
+        jMenu1.add(jMenuItem1);
+
+        jMenuItem2.setText("Closing Stock");
+        jMenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem2ActionPerformed(evt);
+            }
+        });
+        jMenu1.add(jMenuItem2);
+
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Financials");
+
+        jMenuItem3.setText("Daily Collection");
+        jMenu2.add(jMenuItem3);
+
+        jMenuItem4.setText("Waiter Float");
+        jMenu2.add(jMenuItem4);
+
+        jMenuBar1.add(jMenu2);
+
+        setJMenuBar(jMenuBar1);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -655,6 +693,20 @@ setExtendedState(MAXIMIZED_BOTH);
         NewOrder myorder=new NewOrder(CashierProfile.this);
         myorder.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jToggleButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton3ActionPerformed
+       DailyWaiterSales mysales=new DailyWaiterSales(CashierProfile.this);
+       mysales.setVisible(true);
+    }//GEN-LAST:event_jToggleButton3ActionPerformed
+
+    private void jToggleButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton10ActionPerformed
+        UpdateOrder updateme=new UpdateOrder(CashierProfile.this);
+        updateme.setVisible(true);
+    }//GEN-LAST:event_jToggleButton10ActionPerformed
+
+    private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -708,6 +760,13 @@ setExtendedState(MAXIMIZED_BOTH);
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
+    private javax.swing.JMenuItem jMenuItem4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel2;
@@ -728,7 +787,6 @@ setExtendedState(MAXIMIZED_BOTH);
     private javax.swing.JTextField jTextField3;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JToggleButton jToggleButton10;
-    private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JToggleButton jToggleButton3;
     private javax.swing.JToggleButton jToggleButton4;
     private javax.swing.JToggleButton jToggleButton5;

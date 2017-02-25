@@ -8,6 +8,7 @@ package Cashier;
 import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +24,7 @@ public class NewOrder extends javax.swing.JDialog {
     DatabaseConfiguration mynewdb=new DatabaseConfiguration();
     Connection conn;
     PreparedStatement mydata;
+    ResultSet hrs;
     DefaultTableModel mymodel;
     /**
      * Creates new form NewOrder
@@ -35,6 +37,10 @@ public class NewOrder extends javax.swing.JDialog {
         getavailableDrinks();
         mymodel=(DefaultTableModel)customerOrder.getModel();
         mymodel.setRowCount(0);
+        setOrderNumber();
+        getServerDetails();
+        getAvailableDrinks();
+
 
     }
 
@@ -50,17 +56,18 @@ public class NewOrder extends javax.swing.JDialog {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        waiterId = new javax.swing.JComboBox<>();
         orderedNo = new javax.swing.JTextField();
-        jTextField2 = new javax.swing.JTextField();
+        waiterName = new javax.swing.JTextField();
         jPanel2 = new javax.swing.JPanel();
         jToggleButton1 = new javax.swing.JToggleButton();
+        jToggleButton2 = new javax.swing.JToggleButton();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        unitprice = new javax.swing.JTextField();
         jTextField4 = new javax.swing.JTextField();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        drinkname = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
         jPanel5 = new javax.swing.JPanel();
@@ -75,11 +82,21 @@ public class NewOrder extends javax.swing.JDialog {
 
         jLabel2.setText("waiter ID");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        waiterId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Waiter ID" }));
+        waiterId.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                waiterIdItemStateChanged(evt);
+            }
+        });
+        waiterId.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                waiterIdFocusLost(evt);
+            }
+        });
 
-        orderedNo.setText("0");
+        orderedNo.setEnabled(false);
 
-        jTextField2.setText("KILIMO K CORNELIUS");
+        waiterName.setEnabled(false);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -92,10 +109,10 @@ public class NewOrder extends javax.swing.JDialog {
                     .addComponent(jLabel1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox1, 0, 152, Short.MAX_VALUE)
+                    .addComponent(waiterId, 0, 152, Short.MAX_VALUE)
                     .addComponent(orderedNo))
                 .addGap(45, 45, 45)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(waiterName, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(42, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -108,8 +125,8 @@ public class NewOrder extends javax.swing.JDialog {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel2)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(waiterId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(waiterName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(8, 8, 8))
         );
 
@@ -126,28 +143,50 @@ public class NewOrder extends javax.swing.JDialog {
             }
         });
 
+        jToggleButton2.setFont(new java.awt.Font("DejaVu Math TeX Gyre", 1, 48)); // NOI18N
+        jToggleButton2.setText("-");
+        jToggleButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 84, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 5, Short.MAX_VALUE))
+                    .addComponent(jToggleButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(455, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(367, Short.MAX_VALUE))
         );
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.LINE_END);
 
         jLabel4.setText("Unit Price");
 
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Tusker Lager", "Tusker Can", "Tusker Malt" }));
+        unitprice.setFont(new java.awt.Font("DejaVu Math TeX Gyre", 1, 12)); // NOI18N
+        unitprice.setEnabled(false);
+
+        drinkname.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Select Drink" }));
+        drinkname.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                drinknameItemStateChanged(evt);
+            }
+        });
 
         jLabel5.setText("Quantity");
 
@@ -165,8 +204,8 @@ public class NewOrder extends javax.swing.JDialog {
                     .addComponent(jLabel4))
                 .addGap(65, 65, 65)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTextField3)
+                    .addComponent(drinkname, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(unitprice)
                     .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(118, Short.MAX_VALUE))
         );
@@ -176,11 +215,11 @@ public class NewOrder extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(drinkname, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(32, 32, 32)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(unitprice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(40, 40, 40)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
@@ -232,7 +271,7 @@ public class NewOrder extends javax.swing.JDialog {
         jPanel3Layout.setHorizontalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(65, Short.MAX_VALUE)
+                .addContainerGap(60, Short.MAX_VALUE)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(39, 39, 39))
             .addGroup(jPanel3Layout.createSequentialGroup()
@@ -256,21 +295,22 @@ public class NewOrder extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-                
-        try {
+                  
+            //now insert into the other table;
+             try {        
             mydata=conn.prepareStatement("INSERT INTO ordered_items VALUES(?,?,?,?,?)");
             mydata.setInt(1, 0);
             mydata.setInt(2, Integer.parseInt(orderedNo.getText()));
-            mydata.setString(3,jComboBox2.getSelectedItem().toString());
-            mydata.setBigDecimal(4, BigDecimal.valueOf(Float.parseFloat(jTextField3.getText())));
+            mydata.setString(3,drinkname.getSelectedItem().toString());
+            mydata.setBigDecimal(4, BigDecimal.valueOf(Float.parseFloat(unitprice.getText())));
             mydata.setInt(5, Integer.parseInt(jTextField4.getText()));
             
             mydata.execute();
             JOptionPane.showMessageDialog(null, "Success .You have added it", "Hornbill Distributed System", JOptionPane.INFORMATION_MESSAGE);
-        String combodata=jComboBox2.getSelectedItem().toString();
-        String unit=jTextField3.getText();
+        String combodata=drinkname.getSelectedItem().toString();
+        String unit=unitprice.getText();
         String quantity=jTextField4.getText();
-        double totalcost=Double.parseDouble(jTextField3.getText());
+        double totalcost=Double.parseDouble(unitprice.getText());
         int quantum=Integer.parseInt(jTextField4.getText());
         double mytotalcost=0.00;
         mytotalcost=totalcost*quantum;        
@@ -280,7 +320,58 @@ public class NewOrder extends javax.swing.JDialog {
         } catch (SQLException ex) {
             Logger.getLogger(NewOrder.class.getName()).log(Level.SEVERE, null, ex);
         }
+            
+        
+           
+       
     }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void jToggleButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jToggleButton2ActionPerformed
+
+    private void waiterIdItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_waiterIdItemStateChanged
+       String waiterID=(String) waiterId.getSelectedItem();
+       int mynumber=Integer.parseInt(waiterID);
+       
+        try {
+            mydata=conn.prepareStatement("select first_name,last_name from employee_details where id_number='"+mynumber+"'");
+            hrs=mydata.executeQuery();
+            if(hrs.next()){
+                waiterName.setText(hrs.getString("first_name")+" "+hrs.getString("last_name"));
+            }
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(NewOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }       
+       
+    }//GEN-LAST:event_waiterIdItemStateChanged
+
+    private void drinknameItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_drinknameItemStateChanged
+        try {
+            mydata=conn.prepareStatement("SELECT unit_price from selling_prices where drink_name='"+drinkname.getSelectedItem().toString()+"'");
+          hrs=mydata.executeQuery();
+           if(hrs.next()){
+               double myprice=hrs.getDouble("unit_price");
+               unitprice.setText(Double.toString(myprice));
+           }
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(NewOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_drinknameItemStateChanged
+
+    private void waiterIdFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_waiterIdFocusLost
+        try {
+            mydata=conn.prepareStatement("INSERT INTO orders VALUES(?,?,?)");
+             mydata.setInt(1,Integer.parseInt(orderedNo.getText()));
+            mydata.setInt(2,Integer.parseInt(waiterId.getSelectedItem().toString()));
+            mydata.setString(3, waiterName.getText());
+            mydata.execute();
+        } catch (SQLException ex) {
+            Logger.getLogger(NewOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_waiterIdFocusLost
 
     /**
      * @param args the command line arguments
@@ -289,8 +380,7 @@ public class NewOrder extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable customerOrder;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
+    private javax.swing.JComboBox<String> drinkname;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -302,14 +392,66 @@ public class NewOrder extends javax.swing.JDialog {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JToggleButton jToggleButton1;
+    private javax.swing.JToggleButton jToggleButton2;
     private javax.swing.JTextField orderedNo;
+    private javax.swing.JTextField unitprice;
+    private javax.swing.JComboBox<String> waiterId;
+    private javax.swing.JTextField waiterName;
     // End of variables declaration//GEN-END:variables
 
     private void getavailableDrinks() {
        
+    }
+   public void getServerDetails(){
+       try {
+            int nextorder;
+            mydata=conn.prepareStatement("SELECT  id_number from employee_job_details ORDER BY id_number ASC");
+            hrs=mydata.executeQuery();
+            while(hrs.next()){
+                int id_numbers=hrs.getInt("id_number");                
+                waiterId.addItem(Integer.toString(id_numbers));
+            }
+            
+        
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(NewOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   }
+   private void getAvailableDrinks(){
+       try {           
+            mydata=conn.prepareStatement("SELECT  drink_name from counter_drinks  WHERE no_of_cartons >0");
+            hrs=mydata.executeQuery();
+            while(hrs.next()){
+                String mydrink=hrs.getString("drink_name");                
+                drinkname.addItem(mydrink);                
+            }
+            
+        
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(NewOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
+   }
+    private void setOrderNumber(){
+        try {
+            int nextorder;
+            mydata=conn.prepareStatement("SELECT  orderNo from orders ORDER BY orderNo DESC  LIMIT 1");
+            hrs=mydata.executeQuery();
+            if(hrs.next()){
+                int myorder=hrs.getInt("orderNo");
+                nextorder=myorder+1;
+                orderedNo.setText(Integer.toString(nextorder));                
+            }
+            else{
+                orderedNo.setText(Integer.toString(1));
+            }
+        
+        
+        } catch (SQLException ex) {
+            Logger.getLogger(NewOrder.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 }
